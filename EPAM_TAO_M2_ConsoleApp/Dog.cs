@@ -10,7 +10,18 @@ namespace EPAM_TAO_M2_ConsoleApp
         public string StrAnimalName
         {
             get { return strAnimalName; }
-            set { strAnimalName = value; }
+            set {
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    strAnimalName = value;
+                }
+                else
+                {
+                    //Custom Exception
+                    throw new EmptyStringException("Name cannot be empty");
+                }
+            }
         }
         public abstract void Sound();
 
@@ -22,7 +33,7 @@ namespace EPAM_TAO_M2_ConsoleApp
         public void Sleep(string StrAnimalName)
         {
             Console.WriteLine(StrAnimalName + " is sleeping.Zzz...");
-        }
+        }        
 
     }
 
@@ -36,13 +47,25 @@ namespace EPAM_TAO_M2_ConsoleApp
 
         static void Main(string[] args)
         {
-            Dog _dog = new Dog();
+            //Dynamic Polymorphism
+            Animal _dog = new Dog();
+            _dog.StrAnimalName = "Tommy";
 
             _dog.Sound();
             _dog.Sleep();
-
-            _dog.StrAnimalName = "Tommy";
+            
             _dog.Sleep(_dog.StrAnimalName);
+
+            //Equals Overridden
+            Employee e1 = new Employee();
+            e1.Id = 1;
+            e1.Name = "EmpTest";
+
+            Employee e2 = new Employee();
+            e2.Id = 1;
+            e2.Name = "EmpTest";
+
+            Console.WriteLine(e1.Equals(e2));
         }
     }
 }
